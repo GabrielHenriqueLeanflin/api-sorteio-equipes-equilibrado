@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/usuarios', [UsersController::class, 'index']);
+Route::post('/cadastro', [UsersController::class, 'store']);
+Route::post('/login', [UsersController::class, 'login']);*/
