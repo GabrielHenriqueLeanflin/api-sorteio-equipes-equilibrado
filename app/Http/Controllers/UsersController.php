@@ -16,22 +16,38 @@ class UsersController extends Controller
             'teste',
         ];
 
-        return response()->json($lista)
-            ->header('Access-Control-Allow-Origin', '*')
-            ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-            ->header('Access-Control-Allow-Headers', 'Content-Type, X-Auth-Token, Origin, Authorization');
+        return ($lista);
     }
 
    public function store(Request $request)
    {
-       $email = $request->input('email');
-       $password = $request->input('username');
 
-       if (DB::insert('INSERT INTO users (email, password) values (?, ?)', [$email, $password])){
-           return "ok";
+
+       $name = $request['name'];
+       $email = $request['email'];
+       $password = $request['password'];
+       $confirm_password = $request['confirm_password'];
+
+       if($password == $confirm_password){
+           // Retorna uma mensagem de sucesso com status 200 (OK)
+           return response()->json([
+               'status' => 'success',
+               'message' => 'Usuário cadastrado com sucesso!'
+           ], 200);
        } else {
-           return "error";
+           // Retorna uma mensagem de erro com status 400 (Bad Request)
+           return response()->json([
+               'status' => 'error',
+               'message' => 'As senhas não coincidem.'
+           ], 400);
        }
+
+
+       /*       if (DB::insert('INSERT INTO users (email, password) values (?, ?)', [$email, $password])){
+                  return "ok";
+              } else {
+                  return "error";
+              }*/
 
    }
 
