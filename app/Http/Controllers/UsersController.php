@@ -9,14 +9,11 @@ class UsersController extends Controller
 {
     public function index(Request $request)
     {
-        $lista = [
-            'teste',
-            'teste',
-            'teste',
-            'teste',
-        ];
+        // Busca todos os usuários do banco de dados usando Query Builder
+        $users = DB::table('users')->get();
 
-        return ($lista);
+        // Retorna os usuários como JSON
+        return response()->json($users);
     }
 
    public function store(Request $request)
