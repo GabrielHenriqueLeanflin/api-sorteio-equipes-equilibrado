@@ -50,7 +50,7 @@ class UsersController extends Controller
         if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             return response()->json([
                 'sucess' => false,
-                'message' => 'Credenciais incorretas.'
+                'message' => 'Email ou senha inválidos.'
             ], 400);
         }
 
