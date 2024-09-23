@@ -54,11 +54,15 @@ class UsersController extends Controller
             ], 400);
         }
 
+        $user = Auth::user();
+        $user->tokens()->delete();
+        $token = $user->createToken('token');
+
         return response()->json([
             'sucess' => true,
             'message' => 'Login realizado com sucesso!',
-            'user' => Auth::user() // Retorna o usuário autenticado
-        ], 200);
+            'token' => $token->plainTextToken,
+        ]);
 
         } catch (\Exception $e) {
             return response()->json([

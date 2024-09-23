@@ -24,11 +24,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(UsersController::class)->group(function () {
     Route::post('/cadastro', 'store');
     Route::post('/login', 'login');
-})->middleware(Autenticador::class);
+});
 
-Route::controller(JogadoresController::class)->group(function () {
-    Route::get('/jogadores', 'index');
-    Route::post('/criar-jogador', 'store');
-    Route::put('/atualizar-jogador', 'update');
-    Route::delete('/excluir-jogador', 'destroy');
-})->middleware(Autenticador::class);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::controller(JogadoresController::class)->group(function () {
+        Route::get('/jogadores', 'index');
+        Route::post('/criar-jogador', 'store');
+        Route::put('/atualizar-jogador', 'update');
+        Route::delete('/excluir-jogador', 'destroy');
+    });
+});
+
+
+
