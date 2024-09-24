@@ -62,6 +62,7 @@ class UsersController extends Controller
             'sucess' => true,
             'message' => 'Login realizado com sucesso!',
             'token' => $token->plainTextToken,
+            'id' => $user->id,
         ]);
 
         } catch (\Exception $e) {
