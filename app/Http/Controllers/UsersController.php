@@ -55,6 +55,8 @@ class UsersController extends Controller
         }
 
         $user = Auth::user();
+        Auth::login($user);
+
         $user->tokens()->delete();
         $token = $user->createToken('token');
 
