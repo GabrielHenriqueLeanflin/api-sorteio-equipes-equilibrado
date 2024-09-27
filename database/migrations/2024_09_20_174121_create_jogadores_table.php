@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('group_id');
             $table->string('name');
-            $table->string('level');
+            $table->integer('level');
             $table->string('position');
             $table->boolean('status')->default(true);
             $table->timestamps();
