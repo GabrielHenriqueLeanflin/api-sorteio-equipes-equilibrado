@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\JogadoresController;
 use App\Http\Controllers\UsersController;
-use App\Http\Middleware\Autenticador;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,14 +25,12 @@ Route::controller(UsersController::class)->group(function () {
     Route::post('/login', 'login');
 });
 
-Route::middleware('auth:sanctum')->group(function () {
     Route::controller(JogadoresController::class)->group(function () {
         Route::get('/jogadores', 'index');
         Route::post('/criar-jogador', 'store');
         Route::put('/atualizar-jogador', 'update');
+        Route::put('/save-status', 'saveStatus');
         Route::delete('/excluir-jogador', 'destroy');
     });
-});
-
 
 
