@@ -55,9 +55,40 @@ class JogadoresController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+    }
+
+    public function saveStatus(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'status' => 'required'
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            if ($request['status'] !== false) {
+                DB::table('jogadores')
+                    ->where('id', $request['id'])
+                    ->update(['status' => 1]);
+            } else {
+                DB::table('jogadores')
+                    ->where('id', $request['id'])
+                    ->update(['status' => 0]);
+            }
+
+            DB::commit();
+            return response()->json(['sucess' => true, 'message' => 'Status do Jogador atualizado com sucesso!'], 200);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return response()->json([
+                'sucess' => false,
+                'erro' => $th->getMessage()
+            ]);
+        }
     }
 
     public function destroy(Request $request)
