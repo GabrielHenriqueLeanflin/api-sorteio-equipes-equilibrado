@@ -62,22 +62,24 @@ class JogadoresController extends Controller
 
     public function saveStatus(Request $request)
     {
-        $request->validate([
-            'id' => 'required',
-            'status' => 'required'
-        ]);
 
         try {
             DB::beginTransaction();
 
-            if ($request['status'] !== false) {
-                DB::table('jogadores')
-                    ->where('id', $request['id'])
-                    ->update(['status' => 1]);
-            } else {
-                DB::table('jogadores')
-                    ->where('id', $request['id'])
-                    ->update(['status' => 0]);
+            $listaJogadores = $request->all();
+
+            foreach ($listaJogadores as $jogador) {
+                $jogador['status'] = !$jogador['status'] ? 0 : 1;
+
+                $userTabela = DB::table('jogadores')->where('id', $jogador['id'])->first();
+
+                if ($userTabela->status === $jogador['status']) {
+                    continue;
+                } else {
+                    DB::table('jogadores')
+                        ->where('id', $jogador['id'])
+                        ->update(['status' => $jogador['status']]);
+                }
             }
 
             DB::commit();

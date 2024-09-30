@@ -25,12 +25,12 @@ Route::controller(UsersController::class)->group(function () {
     Route::post('/login', 'login');
 });
 
-    Route::controller(JogadoresController::class)->group(function () {
-        Route::get('/jogadores', 'index');
-        Route::post('/criar-jogador', 'store');
-        Route::put('/atualizar-jogador', 'update');
-        Route::put('/save-status', 'saveStatus');
-        Route::delete('/excluir-jogador', 'destroy');
-    });
+Route::controller(JogadoresController::class)->group(function () {
+    Route::get('/jogadores', 'index');
+    Route::post('/criar-jogador', 'store');
+    Route::put('/atualizar-jogador', 'update');
+    Route::put('/save-status', 'saveStatus');
+    Route::delete('/excluir-jogador', 'destroy');
+});
 
 
