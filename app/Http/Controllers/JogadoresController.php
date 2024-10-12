@@ -60,26 +60,21 @@ class JogadoresController extends Controller
         //
     }
 
-    public function saveStatus(Request $request)
+    public function atualizarStatus(Request $request)
     {
-
         try {
             DB::beginTransaction();
 
-            $listaJogadores = $request->all();
+            $jogador = $request->all();
 
-            foreach ($listaJogadores as $jogador) {
-                $jogador['status'] = !$jogador['status'] ? 0 : 1;
-
-                $userTabela = DB::table('jogadores')->where('id', $jogador['id'])->first();
-
-                if ($userTabela->status === $jogador['status']) {
-                    continue;
-                } else {
-                    DB::table('jogadores')
-                        ->where('id', $jogador['id'])
-                        ->update(['status' => $jogador['status']]);
-                }
+            if ($jogador['status'] == 1) {
+                DB::table('jogadores')
+                    ->where('id', $jogador['id'])
+                    ->update(['status' => 0]);
+            } else {
+                DB::table('jogadores')
+                    ->where('id', $jogador['id'])
+                    ->update(['status' => 1]);
             }
 
             DB::commit();
@@ -98,7 +93,9 @@ class JogadoresController extends Controller
         try {
             DB::beginTransaction();
 
-            Jogadores::destroy($request['id']);
+            $id = $request->all();
+
+            Jogadores::destroy($id);
 
             DB::commit();
             return response()->json(['sucess' => true, 'message' => 'Jogador removido com sucesso!'], 200);

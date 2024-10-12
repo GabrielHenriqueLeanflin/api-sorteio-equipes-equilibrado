@@ -29,7 +29,7 @@ Route::controller(JogadoresController::class)->group(function () {
     Route::get('/jogadores', 'index');
     Route::post('/criar-jogador', 'store');
     Route::put('/atualizar-jogador', 'update');
-    Route::put('/save-status', 'saveStatus');
+    Route::put('/atualizar-status', 'atualizarStatus');
     Route::delete('/excluir-jogador', 'destroy');
 });
 
